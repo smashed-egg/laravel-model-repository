@@ -1,0 +1,36 @@
+{
+    "name": "smashed-egg/laravel-model-repository",
+    "description": "Provides enhancements to commands in Laravel",
+    "keywords": ["php", "laravel", "model", "repository"],
+    "type": "library",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/smashed-egg/laravel-model-repository/issues",
+        "source": "https://github.com/smashed-egg/laravel-model-repository"
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.6",
+        "laravel/framework": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmashedEgg\\LaravelModelRepository\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SmashedEgg\\LaravelModelRepository\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tom Ellis"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin"
+    }
+}
