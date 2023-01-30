@@ -1,6 +1,6 @@
 <?php
 
-namespace SmashedEgg\LaravelModelRepository\Console;
+namespace SmashedEgg\LaravelModelRepository\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 

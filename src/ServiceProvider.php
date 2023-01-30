@@ -3,7 +3,7 @@
 namespace SmashedEgg\LaravelModelRepository;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use SmashedEgg\LaravelModelRepository\Console\MakeRepositoryCommand;
+use SmashedEgg\LaravelModelRepository\Commands\MakeRepositoryCommand;
 
 class ServiceProvider extends BaseServiceProvider
 {

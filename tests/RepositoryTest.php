@@ -1,10 +1,10 @@
 <?php
 
-use SmashedEgg\LaravelModelRepository\Repository\AbstractRepository;
+use SmashedEgg\LaravelModelRepository\Repository\Repository;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Eloquent\Model;
 
-class AbstractRepositoryTest extends TestCase
+class RepositoryTest extends TestCase
 {
     public function testRepo(): void
     {
@@ -22,7 +22,7 @@ class AbstractRepositoryTest extends TestCase
 }
 
 
-class TestRepo extends AbstractRepository
+class TestRepo extends Repository
 {
 
 }

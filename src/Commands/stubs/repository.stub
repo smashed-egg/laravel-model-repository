@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use SmashedEgg\LaravelModelRepository\Repository\Repository;
+
+class {{ class }} extends Repository
+{
+
+}
