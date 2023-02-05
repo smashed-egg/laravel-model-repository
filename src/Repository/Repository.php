@@ -30,7 +30,7 @@ class Repository
 
     public function delete(Model $model, bool $force = false): ?bool
     {
-        if ($this->modelSupportsTrait($model, SoftDeletes::class)) {
+        if ($force && $this->modelSupportsTrait($model, SoftDeletes::class)) {
             return $model->forceDelete();
         }
 
@@ -38,11 +38,11 @@ class Repository
     }
 
     /**
-     * @param Model|SoftDeletes $model
+     * @param Model $model
      * @return bool
      * @throws ModelRestoreNotSupportedException
      */
-    public function restore(Model $model): ?bool
+    public function restore(Model $model): bool
     {
         if ( ! $this->modelSupportsTrait($model, SoftDeletes::class)) {
             throw new ModelRestoreNotSupportedException();
