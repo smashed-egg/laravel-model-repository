@@ -2,11 +2,11 @@
 
 namespace SmashedEgg\LaravelModelRepository\Repository;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
+use SmashedEgg\LaravelModelRepository\Exception\ModelRestoreNotSupportedException;
 
 /**
  * Class Repository
@@ -37,11 +37,15 @@ class Repository
         return $model->delete();
     }
 
-    public function restore(Model $model): bool
+    /**
+     * @param Model|SoftDeletes $model
+     * @return bool
+     * @throws ModelRestoreNotSupportedException
+     */
+    public function restore(Model $model): ?bool
     {
         if ( ! $this->modelSupportsTrait($model, SoftDeletes::class)) {
-            //@ TODO throw exception
-            return false;
+            throw new ModelRestoreNotSupportedException();
         }
 
         return $model->restore();

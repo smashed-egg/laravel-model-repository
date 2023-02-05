@@ -1,12 +1,15 @@
 <?php
 
+namespace SmashedEgg\LaravelModelRepository\Tests;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 use SmashedEgg\LaravelModelRepository\Repository\Repository;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Database\Eloquent\Model;
 
 class RepositoryTest extends TestCase
 {
-    public function testRepo(): void
+    public function testModelWorksCorrectlyWithRepository(): void
     {
         $testModel = $this->createMock(Model::class);
 
@@ -15,14 +18,28 @@ class RepositoryTest extends TestCase
         ;
 
         $model = $this->createmock(Model::class);
-        $repo = new TestRepo($model);
+        $repository = new Repository($model);
 
-        $repo->save($testModel);
+        $repository->save($testModel);
+    }
+
+    public function testModelWithSoftDeletesWorksCorrectlyWithRepository(): void
+    {
+        $testModel = $this->createMock(ModelWithSoftDeletes::class);
+
+        $testModel->expects($this->once())
+            ->method('restore')
+            ->willReturn(true)
+        ;
+
+        $model = $this->createmock(Model::class);
+        $repository = new Repository($model);
+
+        $repository->restore($testModel);
     }
 }
 
-
-class TestRepo extends Repository
+class ModelWithSoftDeletes extends Model
 {
-
+    use SoftDeletes;
 }
