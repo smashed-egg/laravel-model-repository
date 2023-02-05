@@ -4,14 +4,16 @@ use Orchestra\Testbench\TestCase;
 
 class MakeRepositoryCommandTest extends TestCase
 {
-    /**
-     * Get Application base path.
-     *
-     * @return string
-     */
-    public static function applicationBasePathss()
+    protected function tearDown(): void
     {
-        return __DIR__.'/../';
+        parent::tearDown();
+
+        /*if (file_exists(app_path('Repositories/UserRepository.php'))) {
+            unlink(app_path('Repositories/UserRepository.php'));
+        }
+        if (file_exists(app_path('Repositories/AccountRepository.php'))) {
+            unlink(app_path('Repositories/AccountRepository.php'));
+        }*/
     }
 
     public function testCommand()

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Repository
- * @package Tomgrohl\Laravel\Repository
+ * @package SmashedEgg\LaravelModelRepository\Repository
  */
 class Repository
 {
