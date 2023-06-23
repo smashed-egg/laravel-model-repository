@@ -21,7 +21,7 @@ composer require smashed-egg/laravel-model-repository
 ```
 ## Usage
 
-### Create Repository
+### Creating a Model Repository
 
 You can run the following command to create a new Repository for your Model, assuming you already have a User model:
 
@@ -42,3 +42,8 @@ Out of the box you get access to the following methods, that will pass along to 
 - restore(Model $model) - When using the SoftDeletes trait you can undo a soft deletion
 - query - Start an eloquent query
 - baseQuery - Start a database query
+
+### Extendability
+
+Coming coon. The ability to override the base Repository used when creating a new Model Repository.
+Useful when you have your own methods you want to use across all your Repositories.
