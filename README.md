@@ -12,4 +12,11 @@ and want their repository logic in a different class.
 * PHP 8.0.2+
 * Laravel 9.0+
 
-More details to follow
+## Installation
+
+To install this package please run:
+
+```
+composer require smashed-egg/laravel-model-repository
+```
+## Usage

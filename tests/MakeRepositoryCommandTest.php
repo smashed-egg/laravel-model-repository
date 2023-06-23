@@ -3,6 +3,7 @@
 namespace SmashedEgg\LaravelModelRepository\Tests;
 
 use Orchestra\Testbench\TestCase;
+use SmashedEgg\LaravelModelRepository\ServiceProvider;
 
 class MakeRepositoryCommandTest extends TestCase
 {
@@ -18,14 +19,14 @@ class MakeRepositoryCommandTest extends TestCase
         }
     }
 
-    public function testCommand()
+    public function testCommandRunsWithFullName()
     {
         $this->artisan('smashed-egg:make:repository', [
             'name' => 'UserRepository'
         ])->expectsOutputToContain('created successfully');
     }
 
-    public function testCommand2()
+    public function testCommandRunsWithAlias()
     {
         $this->artisan('se:make:repository', [
             'name' => 'AccountRepository'
@@ -35,7 +36,7 @@ class MakeRepositoryCommandTest extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \SmashedEgg\LaravelModelRepository\ServiceProvider::class,
+            ServiceProvider::class,
         ];
     }
 }

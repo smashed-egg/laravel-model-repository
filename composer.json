@@ -1,6 +1,6 @@
 {
     "name": "smashed-egg/laravel-model-repository",
-    "description": "Provides enhancements to commands in Laravel",
+    "description": "Add support for Model Reposiories to Laravel",
     "keywords": ["php", "laravel", "model", "repository"],
     "type": "library",
     "license": "MIT",
