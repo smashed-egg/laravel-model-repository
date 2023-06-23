@@ -7,10 +7,12 @@ use SmashedEgg\LaravelModelRepository\Commands\MakeRepositoryCommand;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    public function register()
+    public function boot()
     {
-        $this->commands([
-            MakeRepositoryCommand::class,
-        ]);
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                MakeRepositoryCommand::class,
+            ]);
+        }
     }
 }
