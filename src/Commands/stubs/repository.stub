@@ -2,9 +2,9 @@
 
 namespace {{ namespace }};
 
-use SmashedEgg\LaravelModelRepository\Repository\Repository;
+use {{ baseRepository }};
 
-class {{ class }} extends Repository
+class {{ class }} extends {{ baseRepositoryClass }}
 {
 
 }

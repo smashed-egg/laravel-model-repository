@@ -11,11 +11,11 @@ class MakeRepositoryCommandTest extends TestCase
     {
         parent::tearDown();
 
-        if (file_exists(app_path('Repositories/UserRepository.php'))) {
-            unlink(app_path('Repositories/UserRepository.php'));
-        }
-        if (file_exists(app_path('Repositories/AccountRepository.php'))) {
-            unlink(app_path('Repositories/AccountRepository.php'));
+        $files = glob(app_path('Repositories/*'));
+        foreach($files as $file){
+            if (is_file($file)) {
+                unlink($file);
+            }
         }
     }
 
@@ -23,6 +23,22 @@ class MakeRepositoryCommandTest extends TestCase
     {
         $this->artisan('smashed-egg:make:repository', [
             'name' => 'UserRepository'
+        ])->expectsOutputToContain('created successfully');
+    }
+
+    public function testCommandRunsWithFullNameAndShortBaseRepostioryOverride()
+    {
+        $this->artisan('smashed-egg:make:repository', [
+            'name' => 'StaffRepository',
+            '-B' => CustomRepository::class,
+        ])->expectsOutputToContain('created successfully');
+    }
+
+    public function testCommandRunsWithFullNameAndBaseRepostioryOverride()
+    {
+        $this->artisan('smashed-egg:make:repository', [
+            'name' => 'ProductRepository',
+            '--base-repository' => CustomRepository::class,
         ])->expectsOutputToContain('created successfully');
     }
 

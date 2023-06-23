@@ -14,5 +14,13 @@ class ServiceProvider extends BaseServiceProvider
                 MakeRepositoryCommand::class,
             ]);
         }
+
+        $this->publishes([
+            __DIR__.'/Resources/config/model_repository.php' => config_path('smashedegg/model_repository.php'),
+        ]);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/Resources/config/model_repository.php', 'smashedegg.model_repository'
+        );
     }
 }

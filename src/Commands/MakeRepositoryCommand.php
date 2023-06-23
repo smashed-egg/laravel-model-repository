@@ -2,11 +2,17 @@
 
 namespace SmashedEgg\LaravelModelRepository\Commands;
 
+use Illuminate\Support\Arr;
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
+use SmashedEgg\LaravelModelRepository\Repository\Repository;
 
 class MakeRepositoryCommand extends GeneratorCommand
 {
     protected $name = 'smashed-egg:make:repository';
+
+    protected string $defaultBaseRepository = Repository::class;
 
     /**
      * The type of class being generated.
@@ -55,5 +61,47 @@ class MakeRepositoryCommand extends GeneratorCommand
     protected function getStub()
     {
         return $this->resolveStubPath('/stubs/repository.stub');
+    }
+
+    protected function buildClass($name)
+    {
+        $stub = parent::buildClass($name);
+
+        $baseRepositoryFQNSClass = $this->option('base-repository');
+        $baseRepositoryClass = Arr::last(explode('\\', $baseRepositoryFQNSClass));
+
+        // Replace namespace of repository
+        $stub = str_replace(
+            '{{ baseRepository }}',
+            $baseRepositoryFQNSClass,
+            $stub
+        );
+
+        // Replace class of repository
+        return str_replace(
+            '{{ baseRepositoryClass }}',
+            $baseRepositoryClass,
+            $stub
+        );
+    }
+
+    protected function getArguments()
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+        ];
+    }
+
+    protected function getOptions()
+    {
+        return [
+            [
+                'base-repository',
+                '-B',
+                InputOption::VALUE_OPTIONAL,
+                'The name of the base repository class to extend.',
+                config('smashedegg.model_repository.base_repository', $this->defaultBaseRepository)
+            ],
+        ];
     }
 }
