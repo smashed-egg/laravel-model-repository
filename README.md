@@ -20,3 +20,25 @@ To install this package please run:
 composer require smashed-egg/laravel-model-repository
 ```
 ## Usage
+
+### Create Repository
+
+You can run the following command to create a new Repository for your Model, assuming you already have a User model:
+
+```
+php artisan smashed-egg:make:repository UserRepository
+```
+
+or using the command alias:
+
+```
+php artisan se:make:repository UserRepository
+```
+
+Out of the box you get access to the following methods, that will pass along to the Model instance:
+
+- save(Model $model)
+- delete(Model $model, bool $force = false) - When using the SoftDeletes trait you can control whether you want to soft or hard delete
+- restore(Model $model) - When using the SoftDeletes trait you can undo a soft deletion
+- query - Start an eloquent query
+- baseQuery - Start a database query
