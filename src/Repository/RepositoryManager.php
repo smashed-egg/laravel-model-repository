@@ -2,6 +2,7 @@
 
 namespace SmashedEgg\LaravelModelRepository\Repository;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,20 +12,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class RepositoryManager
 {
+    public function __construct(protected Container $container, protected array $config)
+    {}
+
     /**
-     * The container instance.
-     *
-     * @var \Illuminate\Contracts\Container\Container
+     * @throws BindingResolutionException
      */
-    protected $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
     public function get(Model $model): Repository
     {
+        if (isset($this->config[$model::class])) {
+            return $this->container->make($this->config[$model::class]);
+        }
         return new Repository($model);
     }
 }

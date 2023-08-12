@@ -2,8 +2,10 @@
 
 namespace SmashedEgg\LaravelModelRepository;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use SmashedEgg\LaravelModelRepository\Commands\MakeRepositoryCommand;
+use SmashedEgg\LaravelModelRepository\Repository\RepositoryManager;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -22,5 +24,15 @@ class ServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/Resources/config/model_repository.php', 'smashedegg.model_repository'
         );
+    }
+
+    public function register()
+    {
+        $this->app->singleton(RepositoryManager::class, function(Application $app) {
+            return new RepositoryManager(
+                $app,
+                config('smashedegg.model_repository.model_repository_map', [])
+            );
+        });
     }
 }
