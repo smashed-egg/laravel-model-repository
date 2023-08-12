@@ -18,11 +18,13 @@ class RepositoryManager
     /**
      * @throws BindingResolutionException
      */
-    public function get(Model $model): Repository
+    public function get(Model|string $model): Repository
     {
-        if (isset($this->config[$model::class])) {
-            return $this->container->make($this->config[$model::class]);
+        $modelClass = is_string($model) ? $model : $model::class;
+        if (isset($this->config[$modelClass])) {
+            return $this->container->make($this->config[$modelClass]);
         }
-        return new Repository($model);
+
+        return new Repository($this->container->make($modelClass));
     }
 }

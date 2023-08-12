@@ -14,14 +14,22 @@ class RepositoryManagerTest extends TestCase
     public function testSomething()
     {
         $userRepository = $this->createMock(UserRepository::class);
+        $genericRepository = $this->createMock(Repository::class);
         $container = $this->createMock(Container::class);
 
-        $container->expects($this->once())
-            ->method('make')
-            ->with(UserRepository::class, [])
-            ->willReturn($userRepository)
-        ;
+        $user = new User();
+        $post = new Post();
 
+        $container
+            ->expects($this->any())
+            ->method('make')
+            ->willReturnMap([
+                [UserRepository::class, [], $userRepository],
+                [Post::class, [], $post],
+                [UserRepository::class, [], $userRepository],
+                [Post::class, [], $post],
+            ])
+        ;
 
         $repositoryManager = new RepositoryManager(
             $container,
@@ -32,12 +40,22 @@ class RepositoryManagerTest extends TestCase
 
         $this->assertInstanceOf(
             UserRepository::class,
-            $repositoryManager->get(new User())
+            $repositoryManager->get($user)
         );
 
         $this->assertInstanceOf(
             Repository::class,
-            $repositoryManager->get(new Post())
+            $repositoryManager->get($post)
+        );
+
+        $this->assertInstanceOf(
+            UserRepository::class,
+            $repositoryManager->get(User::class)
+        );
+
+        $this->assertInstanceOf(
+            Repository::class,
+            $repositoryManager->get(Post::class)
         );
     }
 }
