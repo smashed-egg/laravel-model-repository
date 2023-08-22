@@ -28,6 +28,15 @@ You can publish a configuration file that comes with the package:
 php artisan vendor:publish --provider="SmashedEgg\LaravelModelRepository\ServiceProvider"
 ```
 
+[Support Me](https://github.com/sponsors/tomgrohl)
+--------------------------------------------
+
+Do you like this package? Does it improve you're development. Consider sponsoring to help with future development.
+
+[Buy me a coffee!](https://github.com/sponsors/tomgrohl)
+
+Thank you!
+
 ## Usage
 
 ### Configuration (optional)
