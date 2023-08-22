@@ -3,6 +3,7 @@
 namespace SmashedEgg\LaravelModelRepository\Tests;
 
 use Orchestra\Testbench\TestCase;
+use SmashedEgg\LaravelModelRepository\Repository\Repository;
 use SmashedEgg\LaravelModelRepository\Repository\RepositoryManager;
 use SmashedEgg\LaravelModelRepository\ServiceProvider;
 use SmashedEgg\LaravelModelRepository\Tests\Model\User;
@@ -21,8 +22,15 @@ class ServiceProviderTest extends TestCase
     {
         parent::setUp();
 
-        config('smashedegg.model_repository.model_repository_map', [
-            User::class => UserRepository::class,
+        config('smashedegg.model_repository', [
+
+            'base_repository' => Repository::class,
+
+            'auto_wire' => true,
+
+            'model_repository_map' => [
+                User::class => UserRepository::class,
+            ],
         ]);
     }
 

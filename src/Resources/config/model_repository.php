@@ -8,6 +8,11 @@ return [
     'base_repository' => \SmashedEgg\LaravelModelRepository\Repository\Repository::class,
 
     /**
+     *
+     */
+    'auto_wire' => true,
+
+    /**
      * Map of Models to Repository classes
      *
      * Useful when using the RepositoryManager class
