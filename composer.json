@@ -26,7 +26,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SmashedEgg\\LaravelModelRepository\\Tests\\": "tests/"
+            "SmashedEgg\\LaravelModelRepository\\Tests\\": "tests/",
+            "App\\": "vendor/orchestra/testbench-core/laravel/app/"
         }
     },
     "authors": [
