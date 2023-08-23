@@ -41,7 +41,7 @@ Thank you!
 
 ### Configuration (optional)
 
-If you have published the config file (located at config/smashedegg/model_repository.php) 
+If you have published the config file (located at config/smashed_egg/model_repository.php) 
 you can override the base repository class used with the make command, as well as a model to repository mapping, 
 which is useful when using the RepositoryManager class (more on that later).
 

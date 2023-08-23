@@ -18,11 +18,11 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/Resources/config/model_repository.php' => config_path('smashedegg/model_repository.php'),
+            __DIR__.'/Resources/config/model_repository.php' => config_path('smashed_egg/model_repository.php'),
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__.'/Resources/config/model_repository.php', 'smashedegg.model_repository'
+            __DIR__.'/Resources/config/model_repository.php', 'smashed_egg.model_repository'
         );
     }
 
@@ -31,7 +31,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton(RepositoryManager::class, function(Application $app) {
             return new RepositoryManager(
                 $app,
-                config('smashedegg.model_repository.model_repository_map', [])
+                config('smashed_egg.model_repository.model_repository_map', [])
             );
         });
     }
