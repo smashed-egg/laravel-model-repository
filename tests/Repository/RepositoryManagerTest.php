@@ -48,7 +48,6 @@ class RepositoryManagerTest extends TestCase
         $productRepositoryName = "App\\Repositories\\ProductRepository";
 
         $userRepository = $this->createMock(UserRepository::class);
-        $postRepository = $this->createMock(Repository::class);
 
         $productRepository = $this->createMock($productRepositoryName);
         $container = $this->createMock(Container::class);

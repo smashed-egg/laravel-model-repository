@@ -22,7 +22,7 @@ class ServiceProviderTest extends TestCase
     {
         parent::setUp();
 
-        config('smashedegg.model_repository', [
+        config('smashed_egg.model_repository', [
 
             'base_repository' => Repository::class,
 
