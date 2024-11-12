@@ -2,11 +2,11 @@
 
 namespace SmashedEgg\LaravelModelRepository\Commands;
 
-use Illuminate\Support\Arr;
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Support\Arr;
 use SmashedEgg\LaravelModelRepository\Repository\Repository;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class MakeRepositoryCommand extends GeneratorCommand
 {
@@ -34,40 +34,41 @@ class MakeRepositoryCommand extends GeneratorCommand
      * Get the default namespace for the class.
      *
      * @param string $rootNamespace
-     * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         if ( ! is_dir(app_path('Repositories'))) {
             mkdir(app_path('Repositories'));
         }
 
-        return is_dir(app_path('Repositories')) ? $rootNamespace.'\\Repositories' : $rootNamespace;
+        return is_dir(app_path('Repositories')) ? $rootNamespace.'\Repositories' : $rootNamespace;
     }
 
     /**
      * Resolve the fully-qualified path to the stub.
      *
-     * @param  string  $stub
-     * @return string
+     * @param string $stub
      */
-    protected function resolveStubPath($stub)
+    protected function resolveStubPath($stub): string
     {
         return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
             ? $customPath
             : __DIR__.$stub;
     }
 
-    protected function getStub()
+    protected function getStub(): string
     {
         return $this->resolveStubPath('/stubs/repository.stub');
     }
 
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $stub = parent::buildClass($name);
 
+        /** @var string $baseRepositoryFQNSClass */
         $baseRepositoryFQNSClass = $this->option('base-repository');
+
+        /** @var string $baseRepositoryClass */
         $baseRepositoryClass = Arr::last(explode('\\', $baseRepositoryFQNSClass));
 
         // Replace namespace of repository
@@ -85,14 +86,20 @@ class MakeRepositoryCommand extends GeneratorCommand
         );
     }
 
-    protected function getArguments()
+    /**
+     * @return list<mixed>
+     */
+    protected function getArguments(): array
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }
 
-    protected function getOptions()
+    /**
+     * @return list<mixed>
+     */
+    protected function getOptions(): array
     {
         return [
             [
@@ -100,7 +107,7 @@ class MakeRepositoryCommand extends GeneratorCommand
                 '-B',
                 InputOption::VALUE_OPTIONAL,
                 'The name of the base repository class to extend.',
-                config('smashedegg.model_repository.base_repository', $this->defaultBaseRepository)
+                config('smashedegg.model_repository.base_repository', $this->defaultBaseRepository),
             ],
         ];
     }

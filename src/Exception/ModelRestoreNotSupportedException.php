@@ -2,13 +2,7 @@
 
 namespace SmashedEgg\LaravelModelRepository\Exception;
 
-use Exception;
-
 /**
- * Class Repository
- * @package SmashedEgg\LaravelModelRepository\Exception
+ * Class Repository.
  */
-class ModelRestoreNotSupportedException extends Exception
-{
-
-}
+class ModelRestoreNotSupportedException extends \Exception {}

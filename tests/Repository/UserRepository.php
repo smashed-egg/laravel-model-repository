@@ -2,9 +2,10 @@
 
 namespace SmashedEgg\LaravelModelRepository\Tests\Repository;
 
-use SmashedEgg\LaravelModelRepository\Repository\Repository;
+use SmashedEgg\LaravelModelRepository\Repository\AbstractRepository;
+use SmashedEgg\LaravelModelRepository\Tests\Model\User;
 
-class UserRepository extends Repository
-{
-
-}
+/**
+ * @extends AbstractRepository<User>
+ */
+class UserRepository extends AbstractRepository {}

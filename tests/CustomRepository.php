@@ -2,10 +2,10 @@
 
 namespace SmashedEgg\LaravelModelRepository\Tests;
 
-use SmashedEgg\LaravelModelRepository\Repository\Repository;
+use Illuminate\Database\Eloquent\Model;
+use SmashedEgg\LaravelModelRepository\Repository\AbstractRepository;
 
-class CustomRepository extends Repository
-{
-
-}
-
+/**
+ * @extends AbstractRepository<Model>
+ */
+class CustomRepository extends AbstractRepository {}

@@ -5,6 +5,11 @@ namespace SmashedEgg\LaravelModelRepository\Tests;
 use Orchestra\Testbench\TestCase;
 use SmashedEgg\LaravelModelRepository\ServiceProvider;
 
+/**
+ * @internal
+ *
+ * @covers \SmashedEgg\LaravelModelRepository\Commands\MakeRepositoryCommand
+ */
 class MakeRepositoryCommandTest extends TestCase
 {
     protected function tearDown(): void
@@ -12,21 +17,24 @@ class MakeRepositoryCommandTest extends TestCase
         parent::tearDown();
 
         $files = glob(app_path('Repositories/*'));
-        foreach($files as $file){
-            if (is_file($file)) {
-                unlink($file);
+
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    unlink($file);
+                }
             }
         }
     }
 
-    public function testCommandRunsWithFullName()
+    public function testCommandRunsWithFullName(): void
     {
         $this->artisan('smashed-egg:make:repository', [
-            'name' => 'UserRepository'
+            'name' => 'UserRepository',
         ])->expectsOutputToContain('created successfully');
     }
 
-    public function testCommandRunsWithFullNameAndShortBaseRepostioryOverride()
+    public function testCommandRunsWithFullNameAndShortBaseRepositoryOverride(): void
     {
         $this->artisan('smashed-egg:make:repository', [
             'name' => 'StaffRepository',
@@ -34,7 +42,7 @@ class MakeRepositoryCommandTest extends TestCase
         ])->expectsOutputToContain('created successfully');
     }
 
-    public function testCommandRunsWithFullNameAndBaseRepostioryOverride()
+    public function testCommandRunsWithFullNameAndBaseRepositoryOverride(): void
     {
         $this->artisan('smashed-egg:make:repository', [
             'name' => 'ProductRepository',
@@ -42,14 +50,14 @@ class MakeRepositoryCommandTest extends TestCase
         ])->expectsOutputToContain('created successfully');
     }
 
-    public function testCommandRunsWithAlias()
+    public function testCommandRunsWithAlias(): void
     {
         $this->artisan('se:make:repository', [
-            'name' => 'AccountRepository'
+            'name' => 'AccountRepository',
         ])->expectsOutputToContain('created successfully');
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             ServiceProvider::class,

@@ -1,0 +1,12 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+parameters:
+    excludePaths:
+        analyseAndScan:
+            - */*.blade.php
+    level: max
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+    	- '#Cannot call method expectsOutputToContain\(\) on Illuminate\\Testing\\PendingCommand\|int\.#'

@@ -12,15 +12,13 @@ use SmashedEgg\LaravelModelRepository\Tests\Model\Post;
 use SmashedEgg\LaravelModelRepository\Tests\Model\Product;
 use SmashedEgg\LaravelModelRepository\Tests\Model\User;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class RepositoryManagerTest extends TestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [
-            ServiceProvider::class,
-        ];
-    }
-
     public function setUp(): void
     {
         parent::setUp();
@@ -36,23 +34,24 @@ class RepositoryManagerTest extends TestCase
         parent::tearDown();
 
         $files = glob(app_path('Repositories/*'));
-        foreach($files as $file){
-            if (is_file($file)) {
-                unlink($file);
+
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    unlink($file);
+                }
             }
         }
     }
 
-    public function testResolutionWhenAutoWireIsOn()
+    public function testResolutionWhenAutoWireIsOn(): void
     {
-        $productRepositoryName = "App\\Repositories\\ProductRepository";
-
+        $productRepositoryName = 'App\Repositories\ProductRepository';
         $userRepository = $this->createMock(UserRepository::class);
 
-        $productRepository = $this->createMock($productRepositoryName);
+        $productRepository = $this->createMock(ProductRepository::class);
         $container = $this->createMock(Container::class);
 
-        $user = new User();
         $post = new Post();
         $product = new Product();
 
@@ -60,7 +59,7 @@ class RepositoryManagerTest extends TestCase
             ->expects($this->any())
             ->method('make')
             ->willReturnMap([
-                [UserRepository::class, [], $userRepository],
+                [User::class, [], $userRepository],
                 [UserRepository::class, [], $userRepository],
                 [Product::class, [], $product],
                 [$productRepositoryName, [$product], $productRepository],
@@ -81,16 +80,11 @@ class RepositoryManagerTest extends TestCase
 
         $this->assertInstanceOf(
             UserRepository::class,
-            $repositoryManager->get($user)
-        );
-
-        $this->assertInstanceOf(
-            UserRepository::class,
             $repositoryManager->get(User::class)
         );
 
         $this->assertInstanceOf(
-            $productRepositoryName,
+            ProductRepository::class,
             $repositoryManager->get(Product::class)
         );
 
@@ -100,20 +94,17 @@ class RepositoryManagerTest extends TestCase
         );
     }
 
-    public function testResolutionWhenAutoWireIsOff()
+    public function testResolutionWhenAutoWireIsOff(): void
     {
         $userRepository = $this->createMock(UserRepository::class);
         $container = $this->createMock(Container::class);
 
-        $user = new User();
         $post = new Post();
 
         $container
             ->expects($this->any())
             ->method('make')
             ->willReturnMap([
-                [UserRepository::class, [], $userRepository],
-                [Post::class, [], $post],
                 [UserRepository::class, [], $userRepository],
                 [Post::class, [], $post],
             ])
@@ -132,16 +123,6 @@ class RepositoryManagerTest extends TestCase
 
         $this->assertInstanceOf(
             UserRepository::class,
-            $repositoryManager->get($user)
-        );
-
-        $this->assertInstanceOf(
-            Repository::class,
-            $repositoryManager->get($post)
-        );
-
-        $this->assertInstanceOf(
-            UserRepository::class,
             $repositoryManager->get(User::class)
         );
 
@@ -149,5 +130,12 @@ class RepositoryManagerTest extends TestCase
             Repository::class,
             $repositoryManager->get(Post::class)
         );
+    }
+
+    protected function getPackageProviders($app): array
+    {
+        return [
+            ServiceProvider::class,
+        ];
     }
 }

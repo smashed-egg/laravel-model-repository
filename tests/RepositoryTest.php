@@ -2,17 +2,22 @@
 
 namespace SmashedEgg\LaravelModelRepository\Tests;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use PHPUnit\Framework\TestCase;
 use SmashedEgg\LaravelModelRepository\Exception\ModelRestoreNotSupportedException;
 use SmashedEgg\LaravelModelRepository\Repository\Repository;
-use PHPUnit\Framework\TestCase;
-use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class RepositoryTest extends TestCase
 {
-    public function testQueryBaseQueryBuilderIsReturned()
+    public function testQueryBaseQueryBuilderIsReturned(): void
     {
         $model = $this->createMock(Model::class);
 
@@ -38,7 +43,7 @@ class RepositoryTest extends TestCase
         $this->assertInstanceOf(Builder::class, $repository->baseQuery());
     }
 
-    public function testQueryEloquentQueryBuilderIsReturned()
+    public function testQueryEloquentQueryBuilderIsReturned(): void
     {
         $model = $this->createMock(Model::class);
         $repository = new Repository($model);

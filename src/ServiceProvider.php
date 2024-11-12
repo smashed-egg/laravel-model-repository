@@ -5,11 +5,12 @@ namespace SmashedEgg\LaravelModelRepository;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use SmashedEgg\LaravelModelRepository\Commands\MakeRepositoryCommand;
+use SmashedEgg\LaravelModelRepository\Repository\AbstractRepository;
 use SmashedEgg\LaravelModelRepository\Repository\RepositoryManager;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -22,17 +23,29 @@ class ServiceProvider extends BaseServiceProvider
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__.'/Resources/config/model_repository.php', 'smashed_egg.model_repository'
+            __DIR__.'/Resources/config/model_repository.php',
+            'smashed_egg.model_repository'
         );
     }
 
-    public function register()
+    public function register(): void
     {
-        $this->app->singleton(RepositoryManager::class, function(Application $app) {
-            return new RepositoryManager(
-                $app,
-                config('smashed_egg.model_repository.model_repository_map', [])
-            );
-        });
+        $this->app->singleton(
+            RepositoryManager::class,
+            fn (Application $app) => new RepositoryManager($app, $this->getConfigValues())
+        );
+    }
+
+    /**
+     * @return array{'base_repository': class-string, 'auto_wire': bool, 'model_repository_map': array<class-string, class-string>}
+     */
+    protected function getConfigValues(): array
+    {
+        // @phpstan-ignore-next-line
+        return config('smashed_egg.model_repository.model_repository_map', [
+            'base_repository' => AbstractRepository::class,
+            'auto_wire' => true,
+            'model_repository_map' => [],
+        ]);
     }
 }
